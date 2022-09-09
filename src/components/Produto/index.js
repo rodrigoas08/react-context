@@ -6,7 +6,7 @@ import RemoveIcon from "@material-ui/icons/Remove";
 import { useCarrinhoContext } from "common/context/Carrinho";
 
 function Produto({ nome, foto, id, valor, unidade }) {
-	const { carrinho, AdicionarProduto } = useCarrinhoContext();
+	const { carrinho, AdicionarProduto, removerProduto } = useCarrinhoContext();
 	const produtoNoCarrinho = carrinho.find(
 		(itemDoCarrinho) => itemDoCarrinho.id === id
 	);
@@ -20,11 +20,18 @@ function Produto({ nome, foto, id, valor, unidade }) {
 				</p>
 			</div>
 			<div>
-				<IconButton color="secondary">
+				<IconButton
+					color="secondary"
+					disabled={!produtoNoCarrinho}
+					onClick={() => removerProduto(id)}
+				>
 					<RemoveIcon />
 				</IconButton>
 				{produtoNoCarrinho?.quantidade || 0}
-				<IconButton onClick={() => AdicionarProduto({ nome, foto, id, valor })}>
+				<IconButton
+					color="primary"
+					onClick={() => AdicionarProduto({ nome, foto, id, valor })}
+				>
 					<AddIcon />
 				</IconButton>
 			</div>
